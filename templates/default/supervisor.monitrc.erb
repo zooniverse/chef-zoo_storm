@@ -1,0 +1,7 @@
+check process supervisor with pidfile <%= @storm_dir %>/supervisor.pid
+  start program = "/usr/sbin/service supervisor start"
+  stop program = "/usr/sbin/service supervisor stop"
+  <% @supervisor_ports.each do |p| %>
+  if failed port <%= p %> then restart
+  <% end %>
+  if 5 restarts within 5 cycles then timeout

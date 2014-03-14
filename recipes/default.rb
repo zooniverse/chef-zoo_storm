@@ -16,3 +16,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+include_recipe "zoo-base"
+include_recipe "storm"
+
+if node['storm']['is_nimbus'] || node['fqdn'] == node['storm']['nimbus_host']
+  monit_monitrc "nimbus" 
+  monit_monitrc "ui"
+else
+  monit_monitrc "supervisor"
+end

@@ -1,0 +1,5 @@
+check process nimbus with pidfile <%= @storm_dir %>/nimbus.pid
+  start program = "/usr/sbin/service nimbus start"
+  stop program = "/usr/sbin/service nimbus stop"
+  if failed port 6627 then restart
+  if 5 restarts within 5 cycles then timeout
