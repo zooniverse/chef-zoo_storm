@@ -20,9 +20,20 @@
 include_recipe "zoo-base"
 include_recipe "storm"
 
+vars = {
+  storm_dir: node['storm']['install_dir'],
+  supervisor_ports: node['storm']['supervisor_ports']
+}
+
 if node['storm']['is_nimbus'] || node['fqdn'] == node['storm']['nimbus_host']
-  monit_monitrc "nimbus" 
-  monit_monitrc "ui"
+  monit_monitrc "nimbus" do
+    variables(vars)
+  end
+  monit_monitrc "ui" do
+    variables(vars)
+  end
 else
-  monit_monitrc "supervisor"
+  monit_monitrc "supervisor" do
+    variables(vars)
+  end
 end
